@@ -19,15 +19,17 @@ if alwaysCheck then
 	end)
 else
 	AddEventHandler("entityCreating", function(entity, data)
-		if GetEntityType(entity) == 2 then
+		if DoesEntityExist(entity) and GetEntityType(entity) == 2 then
 			local myVehiclePlate = GetVehicleNumberPlateText(entity)
 			local myVehicleModel = GetEntityModel(entity)
 			local allVeh = GetAllVehicles()
 			for i=1, #allVeh do
 				local veh = allVeh[i]
-				if myVehiclePlate == GetVehicleNumberPlateText(veh) and myVehicleModel == GetEntityModel(veh) and entity ~= veh then
-					CancelEvent()
-					break
+				if DoesEntityExist(veh) then
+					if myVehiclePlate == GetVehicleNumberPlateText(veh) and myVehicleModel == GetEntityModel(veh) and entity ~= veh then
+						CancelEvent()
+						break
+					end
 				end
 			end
 		end
